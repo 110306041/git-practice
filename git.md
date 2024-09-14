@@ -1,32 +1,35 @@
 Git物件
 ---
 
-1. blob: 
-- 工作目錄中某個檔案的 "內容"，且只有內容而已
-- 當你執行 git add 指令的同時，這些新增檔案的內容就會立刻被寫入成為 blob 物件
-- 檔名則是物件內容的雜湊運算結果，沒有任何其他其他資訊(檔案時間、原本的檔名或檔案的其他資訊，都會儲存在其他類型的物件裡 (也就是 tree 物件))
+1. blob:
+- Binary large object
+- Git 將檔案內容轉成二進制，並產生 SHA-1 編號後儲存的物件
+- 以 SHA-1 雜湊值作為檔名
+- 也就是工作目錄中某個檔案的**內容**，非檔案本身
+- 當執行 git add 指令時，這些新增檔案的內容就會立刻被寫入成為 blob 物件
   
 2. tree: 
-- 這類物件會儲存特定目錄下的所有資訊，包含該目錄下的檔名、對應的 blob 物件名稱、檔案連結(symbolic link) 或其他 tree 物件等等
-- 由於 tree 物件可以包含其他 tree 物件，所以瀏覽 tree 物件的方式其實就跟檔案系統中的「資料夾」沒兩樣
-- tree 物件這就是在特定版本下某個資料夾的快照(Snapshot)。
+- 以 SHA-1 雜湊值作為檔名
+- tree 物件會儲存**檔案的名稱、目錄的名稱、檔案權限、對應的 blob 物件名稱、檔案連結(symbolic link)等等**
+- tree 物件裡不一定只有包著 Blob 物件，同時也可以包含另一個 tree 物件
+- tree 物件就是在特定版本下某個資料夾的快照(Snapshot)
+- 瀏覽 tree 物件的方式和瀏覽檔案系統中的「資料夾」差不多
 
-3. commit: 
-- 用來記錄有哪些 tree 物件包含在版本中
-- 一個 commit 物件代表著 Git 的一次提交，記錄著特定提交版本有哪些 tree 物件、以及版本提交的時間、紀錄訊息等等，通常還會記錄上一層的 commit 物件名稱 (只有第一次 commit 的版本沒有上層 commit 物件名稱
+3. commit:
+- 進行commit後會出現的物件
+- 紀錄有關每次commit需要有的資訊(e.g.有哪些 tree 物件包含在版本中、版本提交的時間、紀錄訊息等等)
+- 通常還會記錄上一層的 commit 物件名稱 (只有第一次 commit 的版本沒有上層 commit 物件名稱）
 
 4. branch: 
-- Branch 是 Git 中指向某個提交的可變指針。
-- 每當你在某個 branch 上進行新的提交時，該 branch 會自動指向新的提交。
-- 默認的 branch 通常是 main 或 master，但你可以創建多個分支來進行平行開發。分支允許你在不影響主要開發線的情況下進行實驗性更改，後期可以通過合併將變更合併回主要分支。
-- Branch 本質上是指向特定提交的名稱標籤，指向該分支最後一次提交的 Commit。
+- 一個指向某提交的可移動輕量級指標
+- 每當你在某個 branch 上進行新的提交時，該 branch 會自動指向新的提交
+- Git 預設分支名稱是 master，隨著不斷地製作提交， master 分支會為你一直指向該分支最後一次提交的 Commit
+- 分支允許你在不影響主要開發線的情況下進行實驗性更改，後期可以通過合併將變更合併回主要分支
 
-5. head:
-- HEAD 是一個特殊的指針，指向當前檢出的 branch 或 commit。
-- 換句話說，它表示你當前所在的位置。
-- 如果 HEAD 指向某個 branch，那麼你進行的提交會自動更新該 branch 的指針。
-- 如果 HEAD 指向某個 commit 而不是 branch，這種情況稱為 "detached HEAD" 狀態，這表示你處於某個特定提交，不在任何分支上。
-- 通常，當你進行 checkout 操作時，HEAD 會更新為指向你選擇的 branch 或 commit。
+5. HEAD:
+- HEAD 是一個指標，指向某一個分支
+- 通常可以把 HEAD 當做**目前所在分支**看待
+- HEAD 偶爾會發生「沒有指到某個分支」的情況，這個狀態的 HEAD 便稱之「detached HEAD」。
 
 
 在 git repo 操作過程中，.git 檔案夾裡的變化紀錄
@@ -119,15 +122,16 @@ Date:   Sat Sep 14 18:01:31 2024 +0800
 
 commit message 應該怎麼寫比較好？應該有什麼 `style` 嗎？
 ---
-我認為commit message不管是寫給**自己**看還是寫給**團隊**看應該都是要有**基本且一致**的格式，以確保未來的自己和大家都能進入狀況
-不只是要寫下**做了什麼異動**，更要敘述**為什麼要做這樣的異動**
+我認為commit message不管是寫給**自己**看還是寫給**團隊**看，都應該要有**基本且一致**的格式，以確保未來的自己和大家都能進入狀況
+不只是要寫下**做了什麼異動**，更要敘述**為什麼要做這樣的異動**<br>
 e.g.
 - 不好的commit message:
   - Fix stuff
   - Updated email validation
+    
 - 好的commit message:
   - Fix broken link in footer<br>The link to the help page was outdated and returning a 404. Updated to point to the correct help page URL.
-  - Add input validation for email field<br>Added validation to ensure the email field contains a valid email format, preventing invalid submissions that caused backend errors.
+
 
 基於**Conventional Commits**的標準：
 <https://www.conventionalcommits.org/en/v1.0.0/>
