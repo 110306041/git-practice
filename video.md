@@ -1,4 +1,4 @@
-[腦科學最新發現，史丹佛學者揭秘有用學習方法！ ] [https://www.youtube.com/watch?v=DgbSc6Ys710]
+[腦科學最新發現，史丹佛學者揭秘有用學習方法！ ](https://www.youtube.com/watch?v=DgbSc6Ys710)
 ## 基於以上影片，我預計...
 1. 破除固定式思維
   - 不要覺得自己本來就不擅長某個東西、不擅長某個領域
