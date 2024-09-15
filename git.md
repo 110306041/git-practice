@@ -34,97 +34,95 @@ Git物件
 
 在 git repo 操作過程中，.git 檔案夾裡的變化紀錄
 ---
+#### 1：初始化新的 Git 儲存庫
+```bash
+mkdir git-workshop
+cd git-workshop
+git init
+ls -la .git
+```
+觀察：
+- .git資料夾裡有 Git 儲存庫的核心文件和目錄，如 HEAD、config、refs/ 等等
 
-1. 建立git-workshop檔案夾
+#### 3：建立新檔案並檢查狀態
+```bash
+echo "Hello Git" > file.txt
+git status
+ls -la .git
 ```
-total 0
-drwxr-xr-x    3 chenyurou  staff    96  9 14 17:51 .
-drwxr-xr-x+ 110 chenyurou  staff  3520  9 14 17:51 ..
-drwxr-xr-x    9 chenyurou  staff   288  9 14 17:51 .git
-```
+觀察：
+- 在git status中看到「尚未暫存以備提交的變更」裡有紅色的「修改：file.txt」
+- .git資料夾中並無改變
 
-2. 新增一個新檔案file.txt
+#### 4：將檔案加入暫存區
+```bash
+git add file.txt
+git status
+git ls-files --stage
 ```
-total 8
-drwxr-xr-x    4 chenyurou  staff   128  9 14 17:57 .
-drwxr-xr-x+ 110 chenyurou  staff  3520  9 14 17:57 ..
-drwxr-xr-x    9 chenyurou  staff   288  9 14 17:51 .git
--rw-r--r--    1 chenyurou  staff    12  9 14 17:57 file.txt
+觀察：
+- 在git status中看到「要提交的變更」裡有綠色的「修改：file.txt」
+- git add 會將檔案加入暫存區，更新 .git/index 檔案
+  
+#### 5：查看物件目錄變化
+```bash
+ls -la .git/objects
 ```
-
-3. 把file,txt從工作目錄加到暫存區，並提交到儲存庫
-**git log**
+觀察：
+- .git/objects 內有一個新建立的目錄
+- git add 會建立物件來儲存檔案的 blob
+  
+#### 6：提交檔案
+```bash
+git commit -m "Initial commit"
+ls -la .git/objects
 ```
-commit 549582ab5b4245d8dc9278032eedf1a113a4d949 (HEAD -> master)
+觀察：
+- git commit 會在 .git/objects 中建立新的物件（commit object 和一個 tree 物件）
+  
+#### 7：檢視提交內容
+```bash
+git log
+```
+觀察：
+- git log 裡可以看到剛才的提交物件
+```bash
+commit a01b8e741b22aa58f9660c087d38719b3540e969 (HEAD -> master)
 Author: Chen Yurou <sophia21521@gmail.com>
-Date:   Sat Sep 14 18:01:31 2024 +0800
+Date:   Sun Sep 15 11:12:07 2024 +0800
 
-  create file.txt
-(END)
+    Initial commit
+
 ```
 
-
-4. 修改最近一個commit的訊息
-**git log**
+#### 8：建立新分支
+```bash
+git branch new-feature
+ls -la .git/refs/heads
 ```
-commit 20779b5a3a36daf9956339d5a308f029d22d93bc (HEAD -> master)
-Author: Chen Yurou <sophia21521@gmail.com>
-Date:   Sat Sep 14 18:01:31 2024 +0800
-
-    new commit message
-(END)
-```
-
-
-5. 新增了新的檔案hello.txt
-**git status**
-```
-位於分支 master
-未追蹤的檔案:
-  （使用 "git add <檔案>..." 以包含要提交的內容）
-	hello.txt
-
-提交為空，但是存在尚未追蹤的檔案（使用 "git add" 建立追蹤）
+觀察：可以看到多了一個新的分支「new-feature」
+```bash
+total 16
+drwxr-xr-x  4 chenyurou  staff  128  9 15 11:16 .
+drwxr-xr-x  4 chenyurou  staff  128  9 14 17:51 ..
+-rw-r--r--  1 chenyurou  staff   41  9 15 11:12 master
+-rw-r--r--  1 chenyurou  staff   41  9 15 11:16 new-feature
 ```
 
-6. add+commit hello.txt後
-**git status**
+#### 9：檢查 HEAD 指向
+```bash
+cat .git/HEAD
+git checkout new-feature
+cat .git/HEAD
 ```
-位於分支 master
-沒有要提交的檔案，工作區為乾淨狀態
-```
+觀察：一開始的「ref: refs/heads/master」，切換分支後變成「ref: refs/heads/new-feature」
 
-7.移除hello.txt
-```
-total 8
-drwxr-xr-x    4 chenyurou  staff   128  9 14 18:12 .
-drwxr-xr-x+ 110 chenyurou  staff  3520  9 14 18:12 ..
-drwxr-xr-x   12 chenyurou  staff   384  9 14 18:10 .git
--rw-r--r--    1 chenyurou  staff    12  9 14 17:57 file.txt
-```
-
-8.最後查看log
-**git log**
-```
-commit d4c3e8b1c576a90616420ce95cd5ab96f02a86a8 (HEAD -> master)
-Author: Chen Yurou <sophia21521@gmail.com>
-Date:   Sat Sep 14 18:10:36 2024 +0800
-
-    create hello.txt
-
-commit 20779b5a3a36daf9956339d5a308f029d22d93bc
-Author: Chen Yurou <sophia21521@gmail.com>
-Date:   Sat Sep 14 18:01:31 2024 +0800
-
-    new commit message
-(END)
-```
 
 commit message 應該怎麼寫比較好？應該有什麼 style 嗎？
 ---
 
-我認為commit message不管是寫給**自己**看還是寫給**團隊**看，都應該要有**基本且一致**的格式，以確保未來的自己和大家都能進入狀況<br>
-不只是要寫下**做了什麼異動**，更要敘述**為什麼要做這樣的異動**<br>
+我認為commit message不管是寫給自己看還是寫給團隊看，都應該要有**基本且一致**的格式，以確保未來的自己和大家都能進入狀況<br>
+不只是要寫下**做了什麼異動(What)**，更要敘述**為什麼要做這樣的異動(Why)** <br>
 
 e.g.
 - 不好的commit message:
