@@ -100,7 +100,8 @@ Date:   Sun Sep 15 11:12:07 2024 +0800
 git branch new-feature
 ls -la .git/refs/heads
 ```
-觀察：可以看到多了一個新的分支「new-feature」
+觀察：
+- 可以看到多了一個新的分支「new-feature」
 ```bash
 total 16
 drwxr-xr-x  4 chenyurou  staff  128  9 15 11:16 .
@@ -115,7 +116,8 @@ cat .git/HEAD
 git checkout new-feature
 cat .git/HEAD
 ```
-觀察：一開始的「ref: refs/heads/master」，切換分支後變成「ref: refs/heads/new-feature」
+觀察：
+- 一開始的「ref: refs/heads/master」，切換分支後變成「ref: refs/heads/new-feature」
 
 
 commit message 應該怎麼寫比較好？應該有什麼 style 嗎？
@@ -130,7 +132,7 @@ e.g.
   - Updated email validation
     
 - 好的commit message:
-  - Fix broken link in footer<br>The link to the help page was outdated and returning a 404. Updated to point to the correct help page URL.
+  - Fix broken link in footer<br>The link to the help page was outdated and returning a 404.<br>Updated to point to the correct help page URL.
 
 
 基於**Conventional Commits**的標準：
