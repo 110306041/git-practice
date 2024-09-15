@@ -35,90 +35,90 @@ Git物件
 在 git repo 操作過程中，.git 檔案夾裡的變化紀錄
 ---
 #### 1：初始化新的 Git 儲存庫
-```bash
-mkdir git-workshop
-cd git-workshop
-git init
-ls -la .git
-```
-觀察：
-- .git資料夾裡有 Git 儲存庫的核心文件和目錄，如 HEAD、config、refs/ 等等
+  ```bash
+  mkdir git-workshop
+  cd git-workshop
+  git init
+  ls -la .git
+  ```
+  觀察：
+  - .git資料夾裡有 Git 儲存庫的核心文件和目錄，如 HEAD、config、refs/ 等等
 
 #### 3：建立新檔案並檢查狀態
-```bash
-echo "Hello Git" > file.txt
-git status
-ls -la .git
-```
-觀察：
-- 在git status中看到「尚未暫存以備提交的變更」裡有紅色的「修改：file.txt」
-- .git資料夾中並無改變
+  ```bash
+  echo "Hello Git" > file.txt
+  git status
+  ls -la .git
+  ```
+  觀察：
+  - 在git status中看到「尚未暫存以備提交的變更」裡有紅色的「修改：file.txt」
+  - .git資料夾中並無改變
 
 #### 4：將檔案加入暫存區
-```bash
-git add file.txt
-git status
-git ls-files --stage
-```
-觀察：
-- 在git status中看到「要提交的變更」裡有綠色的「修改：file.txt」
-- git add 會將檔案加入暫存區，更新 .git/index 檔案
+  ```bash
+  git add file.txt
+  git status
+  git ls-files --stage
+  ```
+  觀察：
+  - 在git status中看到「要提交的變更」裡有綠色的「修改：file.txt」
+  - git add 會將檔案加入暫存區，更新 .git/index 檔案
   
 #### 5：查看物件目錄變化
-```bash
-ls -la .git/objects
-```
-觀察：
-- .git/objects 內有一個新建立的目錄
-- git add 會建立物件來儲存檔案的 blob
+  ```bash
+  ls -la .git/objects
+  ```
+  觀察：
+  - .git/objects 內有一個新建立的目錄
+  - git add 會建立物件來儲存檔案的 blob
   
 #### 6：提交檔案
-```bash
-git commit -m "Initial commit"
-ls -la .git/objects
-```
-觀察：
-- git commit 會在 .git/objects 中建立新的物件（commit object 和一個 tree 物件）
+  ```bash
+  git commit -m "Initial commit"
+  ls -la .git/objects
+  ```
+  觀察：
+  - git commit 會在 .git/objects 中建立新的物件（commit object 和一個 tree 物件）
   
 #### 7：檢視提交內容
-```bash
-git log
-```
-觀察：
-- git log 裡可以看到剛才的提交物件
-```bash
-commit a01b8e741b22aa58f9660c087d38719b3540e969 (HEAD -> master)
-Author: Chen Yurou <sophia21521@gmail.com>
-Date:   Sun Sep 15 11:12:07 2024 +0800
-
-    Initial commit
-
-```
+  ```bash
+  git log
+  ```
+  觀察：
+  - git log 裡可以看到剛才的提交物件
+  ```bash
+  commit a01b8e741b22aa58f9660c087d38719b3540e969 (HEAD -> master)
+  Author: Chen Yurou <sophia21521@gmail.com>
+  Date:   Sun Sep 15 11:12:07 2024 +0800
+  
+      Initial commit
+  
+  ```
 
 #### 8：建立新分支
-```bash
-git branch new-feature
-ls -la .git/refs/heads
-```
-觀察：
-- 可以看到多了一個新的分支「new-feature」
-```bash
-total 16
-drwxr-xr-x  4 chenyurou  staff  128  9 15 11:16 .
-drwxr-xr-x  4 chenyurou  staff  128  9 14 17:51 ..
--rw-r--r--  1 chenyurou  staff   41  9 15 11:12 master
--rw-r--r--  1 chenyurou  staff   41  9 15 11:16 new-feature
-```
+  ```bash
+  git branch new-feature
+  ls -la .git/refs/heads
+  ```
+  觀察：
+  - 可以看到多了一個新的分支「new-feature」
+  ```bash
+  total 16
+  drwxr-xr-x  4 chenyurou  staff  128  9 15 11:16 .
+  drwxr-xr-x  4 chenyurou  staff  128  9 14 17:51 ..
+  -rw-r--r--  1 chenyurou  staff   41  9 15 11:12 master
+  -rw-r--r--  1 chenyurou  staff   41  9 15 11:16 new-feature
+  ```
 
 #### 9：檢查 HEAD 指向
-```bash
-cat .git/HEAD
-git checkout new-feature
-cat .git/HEAD
-```
-觀察：
-- 一開始的「ref: refs/heads/master」，切換分支後變成「ref: refs/heads/new-feature」
-
+  ```bash
+  cat .git/HEAD
+  git checkout new-feature
+  cat .git/HEAD
+  ```
+  觀察：
+  - 一開始的「ref: refs/heads/master」，切換分支後變成「ref: refs/heads/new-feature」
+  
 
 commit message 應該怎麼寫比較好？應該有什麼 style 嗎？
 ---
