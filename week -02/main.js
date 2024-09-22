@@ -21,7 +21,7 @@ stack.print(); // 輸出 [5]，因為stack只剩下5
 // 試算size()看有幾個元素
 console.log(stack.size()); // 1
 
-// pop測試
+// pop空堆疊測試
 console.log(stack.pop()); // 5
 try {
   console.log(stack.pop()); // 這邊會拋出錯誤
@@ -35,6 +35,6 @@ console.log(stack.isEmpty()); // true
 // 清空 stack 測試
 stack.push(7);
 stack.push(9);
-stack.print();
+stack.print(); //[7,9]
 stack.clear();
 stack.print(); // 清空堆疊之後會印出空堆疊訊息
