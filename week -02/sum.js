@@ -1,11 +1,11 @@
-// 請以 JavaScript 的 array 函式完成 sum 函式，也就是程式碼中不可以出現 for, while 等迴圈程式
+// 1. 請以 JavaScript 的 array 函式完成 sum 函式，也就是程式碼中不可以出現 for, while 等迴圈程式
 function sum(arr) {
   return arr.reduce((accumulator, currentValue) => accumulator + currentValue);
 }
 console.log(sum([1, 5, 3, 2])); // 11
 
 
-// reduce 是這樣運作的
+// 1.1 reduce 是這樣運作的
 const arr = [1, 2, 3, 4, 5];
 const reduceArr = arr.reduce((accumulator, currentValue) => {
   console.log(accumulator); // 1, 3, 6, 10
@@ -14,7 +14,7 @@ const reduceArr = arr.reduce((accumulator, currentValue) => {
 });
 // 由此可知 accumulator 是從 1 開始接收 currentValue 的值並開始累計，而 currentValue 是從 2 開始 loop
 
-// reduce還可以合併陣列
+// 1.2 reduce還可以合併陣列
 const arr = [['a', 'b'], ['c', 'd'], ['e', 'f']];
 const reduceArr = arr.reduce((accumulator, currentValue) => {
   return accumulator.concat(currentValue);
