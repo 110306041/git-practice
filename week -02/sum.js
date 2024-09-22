@@ -37,9 +37,11 @@ const animals = ['ant', 'bison', 'camel', 'duck', 'elephant'];
 
 console.log(animals.slice());
 // Expected output: Array ["ant", "bison", "camel", "duck", "elephant"]
+// 複製開始與結束點（結束點不算）中的內容，沒有填寫開始點會得到array中的所有元素
 
 console.log(animals.slice(2));
 // Expected output: Array ["camel", "duck", "elephant"]
+// end 為結束的索引值，沒有填寫時則得到arr中的所有元素。
 
 console.log(animals.slice(2, 4));
 // Expected output: Array ["camel", "duck"]
