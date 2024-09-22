@@ -1,4 +1,4 @@
-A.Node,js 環境準備
+A. Node,js 環境準備
 ---
 ## 1. 怎麼選擇安裝哪個版本的 Node.js？為什麼？
 Ans:
