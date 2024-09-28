@@ -13,16 +13,14 @@ console.log(`開始工作 at ${now.toISOString()}`);
 // 為了要讓一件事情做完才做下一件事，需使用 Callback function
 
 doJob("刷牙", 1000, function (data) {
-    console.log(data);  // 完成刷牙
-    doJob("吃早餐", 3000, function (data) {
-        console.log(data);  // 完成吃早餐
-        doJob("寫功課", 1000, function (data) {
-            console.log(data);  // 完成寫功課
-            doJob("吃午餐", 2000, function (data) {
-                console.log(data);  // 完成吃午餐
-            });
-        });
+  console.log(data); // 完成刷牙
+  doJob("吃早餐", 3000, function (data) {
+    console.log(data); // 完成吃早餐
+    doJob("寫功課", 1000, function (data) {
+      console.log(data); // 完成寫功課
+      doJob("吃午餐", 2000, function (data) {
+        console.log(data); // 完成吃午餐
+      });
     });
+  });
 });
-
-
