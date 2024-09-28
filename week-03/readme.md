@@ -26,11 +26,14 @@
 如果你要使用 AWS 服務，你會怎麼選擇用哪個 Region，考慮的因素有哪些？
 ---
 #### 選擇 Region 之考量因素
-- Latency：選擇靠近用戶的 Region 可以降低 latency，進而提高應用程序的 response rate。
-  - e.g. 如果此應用大多數用戶位於亞洲，選擇亞洲（東京、新加坡、孟買等）的 Region 會更合適。
-- 成本考量：不同 Region 的定價可能有所不同，包括資料的運算、儲存和傳輸費用。\
-  - e.g. 假設你正要開發一個串流平台，需要大量的儲存空間和頻寬，這些通常在不同的Region會有不同的價格。
-- 法規、合規性：不同國家和地區對資料儲存和處理有不同的法規要求，  
-  - e.g. 歐盟的 GDPR(General Data Protection Regulation) 規定歐盟公民的個人數據必須在歐盟內處理和處理。所以如果應用涵蓋到歐盟市場，會需要選擇一個在歐盟內的 AWS Region。
-- 可用性：不是所有 AWS 服務在每個 Region 都有提供。
-  - e.g. 如果你打算在澳大利亞市場推出電商平台，且預計會依賴依賴 AWS Lambda 和 Amazon Aurora 服務，會需要確認 Sidney（ap-southeast-2）Region是否支持此兩種服務，以確保應用能夠正常運行。
+1. Latency：選擇靠近用戶的 Region 可以降低 latency，進而提高應用程序的 response rate。
+- e.g. 如果此應用大多數用戶位於亞洲，選擇亞洲（東京、新加坡、孟買等）的 Region 會更合適。
+
+2. 成本考量：不同 Region 的定價可能有所不同，包括資料的運算、儲存和傳輸費用。
+- e.g. 假設你正要開發一個串流平台，需要大量的儲存空間和頻寬，這些通常在不同的Region會有不同的價格。
+
+3. 法規、合規性：不同國家和地區對資料儲存和處理有不同的法規要求，  
+- e.g. 歐盟的 GDPR(General Data Protection Regulation) 規定歐盟公民的個人數據必須在歐盟內處理和處理。所以如果應用涵蓋到歐盟市場，會需要選擇一個在歐盟內的 AWS Region。
+
+4. 可用性：不是所有 AWS 服務在每個 Region 都有提供。
+- e.g. 如果你打算在澳大利亞市場推出電商平台，且預計會依賴依賴 AWS Lambda 和 Amazon Aurora 服務，會需要確認 Sidney（ap-southeast-2）Region是否支持此兩種服務，以確保應用能夠正常運行。
