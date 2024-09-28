@@ -90,18 +90,16 @@ found 0 vulnerabilities
 - 當其他開發者或生產環境安裝此專案時，這些依賴會被自動安裝。
 - 會被遞歸安裝（transitive installation）：如果 A 需要 B，B 需要 C，那麼 C 也會被安裝，因為 B 需要 C 才能正常運作，進而確保 A 也能正常運作。
 - 安裝情況：
-
-1. 執行 npm install 並且當前目錄包含 package.json 時。
-2. 執行 npm install $package 安裝其他套件時。
+  1. 執行 npm install 並且當前目錄包含 package.json 時。
+  2. 執行 npm install $package 安裝其他套件時。
 
 ### devDependencies:
 
 - 只在 **開發或測試階段** 需要的套件，不會在生產環境中使用。例如：測試框架、編譯工具、代碼格式化工具，Webpack、Babel、ESLint、Jest 等。
 - 不會被遞歸安裝：當 A 需要 B 時，不會安裝 B 的開發依賴，因為測試或開發 B 並非測試 A 的必要條件。
 - 安裝情況：
-
-1. 預設情況下，執行 npm install 會安裝 devDependencies，但如果使用 --production 標誌或設置環境變數 NODE_ENV=production，則不會安裝 devDependencies。
-2. 執行 npm install "$package" 時，devDependencies 不會被安裝，除非使用 --dev 標誌。
+  1. 預設情況下，執行 npm install 會安裝 devDependencies，但如果使用 --production 標誌或設置環境變數 NODE_ENV=production，則不會安裝 devDependencies。
+  2. 執行 npm install "$package" 時，devDependencies 不會被安裝，除非使用 --dev 標誌。
 
 參考資料：[stackoverflow](https://stackoverflow.com/questions/18875674/whats-the-difference-between-dependencies-devdependencies-and-peerdependencie)
 
@@ -188,7 +186,7 @@ app.listen(port, () => {
 
 ## h. import/export 分別是 JavaScript 引用模組的兩種方式: CJS vs ESM，這兩者分別怎麼用？
 
-### 1. **CommonJS (CJS) - require **
+### 1. CommonJS (CJS) - require
 
 #### 文件 1: moduleA.js
 
@@ -210,7 +208,7 @@ const greet = require("./moduleA");
 greet("Alice"); // 輸出：Hello, Alice!
 ```
 
-### 2. **ECMAScript Modules (ESM) - `import/export`**
+### 2. ECMA Script Modules (ESM) - import/export
 
 #### 文件 1: moduleB.js
 
