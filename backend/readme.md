@@ -1,19 +1,86 @@
-package.json 中的 dependencies 與 devDependencies 分別是什麼
+``` bash
+npm install express 
+
+added 65 packages, and audited 66 packages in 3s
+
+13 packages are looking for funding
+  run `npm fund` for details
+
+found 0 vulnerabilities
+
+```
+a. 觀察 package.json 的變化
+---
+- package.json 在 install express 前
+``` json
+{
+  "name": "cloudnative2024",
+  "version": "1.0.0",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/110306041/git-practice.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/110306041/git-practice/issues"
+  },
+  "homepage": "https://github.com/110306041/git-practice#readme",
+  "description": ""
+}
+
+```
+- package.json 在 install express 後
+``` json
+{
+  "name": "cloudnative2024",
+  "version": "1.0.0",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/110306041/git-practice.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/110306041/git-practice/issues"
+  },
+  "homepage": "https://github.com/110306041/git-practice#readme",
+  "description": "",
+  "dependencies": {
+    "express": "^4.21.0"
+  }
+}
+
+```
+- 可以看到 package.json 中**新增一個 dependencies 欄位，並在這個欄位裡面加入 express 和他的版本編號**。
+
+b. 觀察 node_modules 裡面有什麼
 ---
 
-package.json 中的 scripts 這個區塊怎麼用？
+c. package.json 中的 dependencies 與 devDependencies 分別是什麼
 ---
 
-Port number 要怎麼以環境變數來設定？
+d. package.json 中的 scripts 這個區塊怎麼用？
 ---
 
-關於哪些檔案應該要被放上 github repo 這個問題，描述看看為什麼你選擇上傳某些檔案、選擇不上傳某些檔案，決策的要素是什麼？
+f. Port number 要怎麼以環境變數來設定？
 ---
 
-範例程式中用 require，但上週的 Stack 是用 import/export，這兩種分別是 JavaScript 引用模組的兩種方式: CJS vs ESM，這兩者分別怎麼用？
+g. 關於哪些檔案應該要被放上 github repo 這個問題，描述看看為什麼你選擇上傳某些檔案、選擇不上傳某些檔案，決策的要素是什麼？
 ---
 
-進階題
+h. 範例程式中用 require，但上週的 Stack 是用 import/export，這兩種分別是 JavaScript 引用模組的兩種方式: CJS vs ESM，這兩者分別怎麼用？
+---
+
+i. 進階題
 ---
 
 [localhost](http://localhost) 是什麼？
