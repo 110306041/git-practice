@@ -4,7 +4,8 @@
 ## Region
 - AWS 作為雲端商，會在世界各大地區建立基礎設施，ex: 東京(Tokyo)。一個實體地區的概念對到 AWS 的架構中就是 Region。
 - 使用者可選擇要在哪個 Region 運行你的應用，選擇 Region 後，所有的運算、儲存等操作都會在該地區內進行。
-- 為了提高數據的安全性和應用的可靠性，每個 Region 都是完全獨立的。*e.g. 如果一個地區發生地震或洪水，其他地區的數據中心不會受到影響，且地理上的接近性也可以減少數據傳輸時間，從而降低 latency，提高應用程序的 response rate。*
+- 為了提高數據的安全性和應用的可靠性，每個 Region 都是完全獨立的。
+- e.g. 如果一個地區發生地震或洪水，其他地區的數據中心不會受到影響，且地理上的接近性也可以減少數據傳輸時間，從而降低 latency，提高應用程序的 response rate。
 - 一個 Region 會有多個 AZ
   
 ## AZ (availability zones)
@@ -15,7 +16,7 @@
 
 ## 兩者之關聯
 ![This is an alt text.](https://www.cythilya.tw/assets/aws/architecting-on-aws-note-1/data_center_az_local_zone_region.png)
-- 如上圖所示，每個 **region** 上有多個 **AZ**，每個 AZ 裡又有多個 **data center**
+- 如上圖所示，一個 **Region** 上有多個 **AZ**，每個 AZ 裡又有多個 **data center**
 - **Local Zone** 為**位於市中心的機房**，更貼近使用者實體距離的基礎設施。local zone 在市中心，可減少 latency。
 
 ## 參考資料
