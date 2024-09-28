@@ -24,7 +24,6 @@
 [Architecting on AWS 筆記：基礎設施](https://www.cythilya.tw/2022/04/28/architecting-on-aws-infrastructure/)
 
 </br>
-</br>
 
 如果你要使用 AWS 服務，你會怎麼選擇用哪個 Region，考慮的因素有哪些？
 ---
