@@ -23,11 +23,6 @@ console.log(stack.size()); // 1
 
 // pop空堆疊測試
 console.log(stack.pop()); // 5
-try {
-  console.log(stack.pop()); // 這邊會拋出錯誤
-} catch (error) {
-  console.error(error.message); // 顯示error message
-}
 
 // 檢查isEmpty()
 console.log(stack.isEmpty()); // true

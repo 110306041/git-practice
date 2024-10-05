@@ -18,18 +18,16 @@ export default class Stack {
   // 移除並回傳 stack 頂部的元素
   pop() {
     // TODO
-    if (this.isEmpty()) {
-      throw new Error("Cannot pop from an empty stack"); //考量到空堆疊的情況，沒有元素可以pop
-    }
+    if (this.isEmpty()) return console.log("It's an empty stack!"); //考慮到空堆疊，如果不加這個會印出undefined
+
     return this.#items.pop();
   }
 
   // 回傳 stack 頂部的元素，但不移除它
   peek() {
     // TODO
-    if (this.isEmpty()) {
-      throw new Error("Cannot peek from an empty stack"); //考量到空堆疊的情況，沒有元素可以peek
-    }
+    if (this.isEmpty()) return console.log("It's an empty stack!"); //考慮到空堆疊，如果不加這個會印出undefined
+
     return this.#items[this.#items.length - 1];
   }
 
@@ -54,7 +52,7 @@ export default class Stack {
   // 印出 stack 內容
   print() {
     // TODO
-    if (this.#items.length === 0) return console.log("It's an empty stack!"); //考慮到空堆疊，如果不加這個會印出undefined
+    if (this.isEmpty()) return console.log("It's an empty stack!"); //考慮到空堆疊，如果不加這個會印出undefined
     console.log(this.#items);
   }
 }
