@@ -10,7 +10,7 @@ Linux檔案目錄結構
   - **/var(variable)：** 與系統運作過程有關
 - FHS 會要求目錄下**必須**要有什麼檔案、**建議**可以有什麼檔案，當然也有 FHS 沒有規範，但也很**重要**的目錄。
 ![/image/sample.webp ](https://i.ytimg.com/vi/42iQKuQodW4/maxresdefault.jpg)
-
+</br>[Linux Directories Explained in 100 Seconds](https://www.youtube.com/watch?v=42iQKuQodW4)
 ### /etc 是什麼的縮寫？這裡通常都放哪些檔案？
 - "et cetera" or "editable text config"
 - **系統主要的設定檔幾乎都放置在這個目錄內**，例如人員的帳號密碼、系統的主要設定、各種服務的起始檔等等。
@@ -54,6 +54,7 @@ Linux檔案目錄結構
 - AWS EC2 全名 Elastic Compute Cloud，是一個具有彈性擴充的虛擬執行個體。
 - EC2 是由作業系統、vCPU以及記憶體所構成
   <img width="781" alt="截圖 2024-10-06 下午3 20 21" src="https://github.com/user-attachments/assets/f3b6d030-adf7-46a7-81aa-0280af612198">
+</br>[可以很簡單也可以非常複雜的EC2_InstanceType](https://ithelp.ithome.com.tw/m/articles/10295411)
 - **instance type 由不同的CPU、記憶體、儲存體和網路頻寬組合而成，讓用戶為應用程式彈性選擇適當的資源組合。**
 - instance type 中包含
   - vCPU
@@ -96,6 +97,7 @@ Linux檔案目錄結構
 
 ### Forward Proxy vs. Reverse proxy
   ![image](https://github.com/user-attachments/assets/9446b94f-31d6-42db-ad0f-16a303cc07fe)
+</br>[【前端學Nginx】什麼是Nginx？](https://pink-learn-frontend.medium.com/%E5%89%8D%E7%AB%AF%E5%AD%B8nginx-%E4%BB%80%E9%BA%BC%E6%98%AFnginx-fc604db20ad1)
 - `Forward Proxy`
   - 當 client 從瀏覽器輸入網址，發送 request 的時候，會先連到 proxy server，再轉連到實際上真正要連到的 web server。這個時候真正的目的地只知道 proxy server 對他發送 request，不知道實際發送 request 的人是 client。
   - VPN 的應用概念就是正向代理：連到 VPN 提供的 proxy，再用那個 proxy 去騙實際上要連到的目的地的真實身份。
@@ -171,7 +173,7 @@ ubuntu@ip-172-31-38-27:~/git-practice/backend$ sudo tail -f /var/log/nginx/acces
 - [Nginx 是什麼？有哪些用途？](https://www.explainthis.io/zh-hant/swe/why-nginx)
 - [可以很簡單也可以非常複雜的EC2_InstanceType](https://ithelp.ithome.com.tw/m/articles/10295411)
 - [【Linux】 檔案目錄結構筆記](https://watson050308.medium.com/linux-%E6%AA%94%E6%A1%88%E7%9B%AE%E9%8C%84%E7%B5%90%E6%A7%8B-5f9f6e7efeca)</br>
-[Linux Directories Explained in 100 Seconds](https://www.youtube.com/watch?v=42iQKuQodW4)
+- [Linux Directories Explained in 100 Seconds](https://www.youtube.com/watch?v=42iQKuQodW4)
 - [Security Group 簡介與佈建](https://ithelp.ithome.com.tw/articles/10264200)
 - [Linux 的 su 與 sudo 指令教學與範例](https://medium.com/linux-on-raspberry-pi4/linux-%E7%9A%84-su-%E8%88%87-sudo-%E6%8C%87%E4%BB%A4%E6%95%99%E5%AD%B8%E8%88%87%E7%AF%84%E4%BE%8B-%E8%BD%89%E9%8C%84-a47251c5296)
 - ChatGPT（用在部署 Web Server 的過程）
