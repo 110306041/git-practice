@@ -5,7 +5,7 @@ const dotenv = require("dotenv");
 // 載入 .env 檔案中的變數
 dotenv.config();
 
-const port = process.env.PORT || 8080;
+const port = process.env.PORT || 3000;
 
 app.get("/", (req, res) => {
   res.send("Hello World!");
