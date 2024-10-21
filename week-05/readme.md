@@ -1,7 +1,7 @@
 網域購買與憑證申請
 ---
-## 1. 我的網址，應該是 https://www.xxx.xxx，點擊過去應該要可以看到個人作業 4 架設的 Express server （由 Nginx proxy 到 Express）
-
+## 1. 我的網址
+https://abc.nccumisoj.online/
 ## 2. 你在哪裡購買網域的
 - GoDaddy
 - 原因：
