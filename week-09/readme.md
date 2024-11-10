@@ -1,7 +1,8 @@
 Troubleshooting Lab - Web Server
 ---
+公司有一台 EC2 instance，裡面有用 systemd 管理了一個 NGINX web server，但它現在似乎無法正確運作，請修復它。
 
-1. 建立好 EC2 後，在本地端 SSH 進去，username 是 ubuntu。
+### 1. 建立好 EC2 後，在本地端 SSH 進去，username 是 ubuntu。
 
 ``` bash
 # 我的 "lab.pem" 放在桌面
@@ -13,9 +14,9 @@ ssh -i "lab.pem" ubuntu@57.180.27.175
 # 檢查 server 上本地的 HTTP 服務是否運行正常
 curl localhost
 ```
--> 看到 "Haha, I am the fake web server. Try to find the real web server!"
+**-> 看到 "Haha, I am the fake web server. Try to find the real web server!"**
 
-2. 啟動 nginx 發現失敗，查看 nginx status
+### 2. 啟動 nginx 發現失敗，查看 nginx status
 
 ``` bash
 ubuntu@ip-172-31-35-36:~$ sudo systemctl start nginx
@@ -38,16 +39,16 @@ Nov 10 02:31:10 ip-172-31-35-36 systemd[1]: nginx.service: Failed with result 'e
 Nov 10 02:31:10 ip-172-31-35-36 systemd[1]: Failed to start nginx.service - A high performance web server and a reverse proxy server.
 ```
 
--> 看到 unexpected ";" in /etc/nginx/nginx.conf:8
+**-> 看到 unexpected ";" in /etc/nginx/nginx.conf:8**
 
-3. 修改 Nginx 的設定檔
+### 3. 修改 Nginx 的設定檔
 ``` bash
 sudo nano /etc/nginx/nginx.conf
 ```
 <img width="300" alt="截圖 2024-11-10 上午10 40 13" src="https://github.com/user-attachments/assets/d3bd7bf4-e644-4740-a146-0f296090987c">
 
--> 在第八行真的看到有 unexpected ";"，刪除後存檔
--> 再重新啟動一次 nginx
+**-> 在第八行真的看到有 unexpected ";"，刪除後存檔**
+**-> 再重新啟動一次 nginx**
 
 ``` bash
 ubuntu@ip-172-31-35-36:/$ sudo systemctl restart nginx
@@ -73,9 +74,9 @@ Nov 10 02:43:53 ip-172-31-35-36 systemd[1]: nginx.service: Control process exite
 Nov 10 02:43:53 ip-172-31-35-36 systemd[1]: nginx.service: Failed with result 'exit-code'.
 Nov 10 02:43:53 ip-172-31-35-36 systemd[1]: Failed to start nginx.service - A high performance web server and a reverse proxy server.
 ```
--> 還是有錯誤，顯示 Nginx 嘗試 bind 到port 80，但是 port 80 已經被別人佔用了
+**-> 還是有錯誤，顯示 Nginx 嘗試 bind 到port 80，但是 port 80 已經被別人佔用了**
 
-4. 查看是誰占用了 port 80，kill 掉，再重新啟動一次 nginx
+### 4. 查看是誰占用了 port 80，kill 掉，再重新啟動一次 nginx
 
 ``` bash
 ubuntu@ip-172-31-35-36:/$ sudo lsof -i :80
@@ -103,20 +104,31 @@ Nov 10 02:48:19 ip-172-31-35-36 systemd[1]: Started nginx.service - A high perfo
 ubuntu@ip-172-31-35-36:/$ curl localhost
 curl: (7) Failed to connect to localhost port 80 after 0 ms: Couldn't connect to server
 ```
--> nginx 成功啟動，但又有了新問題：無法成功連到server
+**-> nginx 成功啟動，但又有了新問題：無法成功連到server**
 
-
-5. 查看權限
+### 5. 經組員提醒需要檢查nginx文件權限，改變 /var/myweb/index.html 文件的群組擁有者到 www-data
 ``` bash
+ubuntu@ip-172-31-35-36:~$ sudo lsof -i :80
+COMMAND PID     USER   FD   TYPE DEVICE SIZE/OFF NODE NAME
+nginx   672     root    6u  IPv4   7553      0t0  TCP *:http (LISTEN)
+nginx   673 www-data    6u  IPv4   7553      0t0  TCP *:http (LISTEN)
 ubuntu@ip-172-31-35-36:/$ ls -la /var/myweb/index.html
 -rw-r----- 1 root root 165 Oct 11 07:17 /var/myweb/index.html
 ubuntu@ip-172-31-35-36:/$ sudo chown root:www-data /var/myweb/index.html
+ubuntu@ip-172-31-35-36:~$ ls -la /var/myweb/index.html
+-rw-r----- 1 root www-data 165 Oct 11 07:17 /var/myweb/index.html
 ubuntu@ip-172-31-35-36:/$ sudo systemctl restart nginx
 ubuntu@ip-172-31-35-36:/$ curl localhost
 curl: (7) Failed to connect to localhost port 80 after 0 ms: Couldn't connect to server
 ```
+**-> 執行 ls -la /var/myweb/index.html 發現只有 root，這可能會阻止 www-data 讀取文件**
 
-6. 查看防火牆
+**-> 使用 sudo chown root:www-data /var/myweb/index.html 命令，將文件的群組擁有者更改為 www-data。**
+（www-data 通常是許多 Linux 系統上運行 web 服務的默認用戶，包括 nginx 和 Apache。這樣做是為了讓 nginx 能夠讀取這個文件）
+
+**-> 重新嘗試從本地訪問，但還是失敗了**
+
+### 6. 檢查防火牆問題
 ``` bash
 ubuntu@ip-172-31-35-36:/$ sudo iptables -L
 Chain INPUT (policy ACCEPT)
@@ -129,9 +141,9 @@ target     prot opt source               destination
 Chain OUTPUT (policy ACCEPT)
 target     prot opt source               destination
 ```
--> 在 INPUT 鏈中，有一個規則指定拒絕所有嘗試到達端口 80（HTTP）的 TCP 連接。這個規則將拒絕任何來自外部的 HTTP 請求到達您的服務器，並以 ICMP 端口不可達消息作為響應。這意味著即使 Nginx 配置正確且準備好處理 HTTP 請求，流量仍將在到達 Nginx 之前被阻止。
+**-> 在 INPUT 鏈中，有一個規則指定拒絕所有嘗試到達 port 80（HTTP）的 TCP 連接。這表示流量會在到達 Nginx 之前被阻止。**
 
-6. 刪除第一條規則，並在防火牆的 INPUT 鏈開頭插入一條規則，允許所有指向端口 80 的 TCP 數據包進入本機，最後再進行一次測試
+### 7. 刪除 REJECT 的那條規則，並插入一條新規則，設定伺服器可以接受來自任何來源的網頁瀏覽請求
 ``` bash
 ubuntu@ip-172-31-35-36:/$ sudo iptables -L
 Chain INPUT (policy ACCEPT)
@@ -167,12 +179,11 @@ ubuntu@ip-172-31-35-36:/$ curl localhost
   </body>
 </html>
 ```
--> 成功了！
--> reboot後，又失敗了，重新查看防火牆規則，發現沒有儲存到
+**-> 再進行一次測試，成功了！**
+**-> 經老師提醒要 reboot 之後，又失敗了，重新查看防火牆規則，發現完全沒有儲存到，REJECT 的那條規則還是在那裡**
+（修改 iptables 規則後，這些變更在 reboot 後默認不會保存。為了使規則一直都在，需要使用 iptables-save 命令等相關工具來保存這些規則）
 
-修改 iptables 規則後，這些變更在重啟後默認不會保存。為了使規則持久化，您需要使用 iptables-save 命令或相關工具（如 iptables-persistent 包）來保存這些設置。
-
-7. 重新再添加一次規則，並存檔
+### 8. 重新再添加一次規則，並存檔
 ``` bash
 ubuntu@ip-172-31-35-36:~$ sudo iptables -D INPUT 1
 ubuntu@ip-172-31-35-36:~$ sudo iptables -I INPUT -p tcp --dport 80 -j ACCEPT
@@ -188,9 +199,9 @@ Chain OUTPUT (policy ACCEPT)
 target     prot opt source               destination
 ubuntu@ip-172-31-35-36:~$ sudo sh -c "iptables-save > /etc/iptables/rules.v4"
 ```
--> 再檢查一次 nginx，發現上面處理過的 port 80 被佔用問題又回來了
+**-> 再檢查一次 nginx，發現上面處理過的 port 80 被佔用問題又回來了**
 
-8. 停止和禁用 srv 服務，防止它在系統啟動時自動啟動
+### 8. 停止和禁用 srv 服務，防止它在系統啟動時自動啟動
 ``` bash
 ubuntu@ip-172-31-35-36:~$ sudo lsof -i :80
 COMMAND PID USER   FD   TYPE DEVICE SIZE/OFF NODE NAME
@@ -199,13 +210,17 @@ ubuntu@ip-172-31-35-36:~$ sudo systemctl stop srv
 ubuntu@ip-172-31-35-36:~$ sudo systemctl disable srv
 Removed "/etc/systemd/system/multi-user.target.wants/srv.service".`
 ```
+**-> reboot 後還是失敗，nginx 沒有在開機時自動啟動**
 
-9. reboot 後還是失敗，nginx沒有在開機時自動啟動
+### 9. 啟用 nginx，讓他開機後自動啟動
 ``` bash
 ubuntu@ip-172-31-35-36:~$ sudo systemctl enable nginx
 Synchronizing state of nginx.service with SysV service script with /usr/lib/systemd/systemd-sysv-install.
 Executing: /usr/lib/systemd/systemd-sysv-install enable nginx
 ubuntu@ip-172-31-35-36:~$ sudo systemctl start nginx
 ```
-10. 再reboot一次，這次沒出現任何問題，直接成功
+### 10. 再reboot一次，這次沒出現任何問題，直接成功
 <img width="291" alt="截圖 2024-11-10 上午11 48 02" src="https://github.com/user-attachments/assets/0cccb435-facc-4eb5-b033-7448888c3402">
+
+### 心得
+
