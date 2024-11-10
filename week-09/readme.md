@@ -107,7 +107,7 @@ curl: (7) Failed to connect to localhost port 80 after 0 ms: Couldn't connect to
 ```
 **-> nginx 成功啟動，但又有了新問題：無法成功連到server**
 
-### 5. 經組員提醒需要檢查nginx文件權限，改變 /var/myweb/index.html 文件的群組擁有者到 www-data
+### 5. 經組員提醒需要檢查 nginx 文件權限，改變 /var/myweb/index.html 文件的群組擁有者到 www-data
 ``` bash
 ubuntu@ip-172-31-35-36:~$ sudo lsof -i :80
 COMMAND PID     USER   FD   TYPE DEVICE SIZE/OFF NODE NAME
