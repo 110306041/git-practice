@@ -48,6 +48,7 @@ sudo nano /etc/nginx/nginx.conf
 <img width="300" alt="截圖 2024-11-10 上午10 40 13" src="https://github.com/user-attachments/assets/d3bd7bf4-e644-4740-a146-0f296090987c">
 
 **-> 在第八行真的看到有 unexpected ";"，刪除後存檔**
+
 **-> 再重新啟動一次 nginx**
 
 ``` bash
@@ -201,7 +202,7 @@ ubuntu@ip-172-31-35-36:~$ sudo sh -c "iptables-save > /etc/iptables/rules.v4"
 ```
 **-> 再檢查一次 nginx，發現上面處理過的 port 80 被佔用問題又回來了**
 
-### 8. 停止和禁用 srv 服務，防止它在系統啟動時自動啟動
+### 9. 發現有一個名字是 srv 的 service 正在佔用 port 80，停止和禁用 srv 服務，防止它在系統啟動時自動啟動
 ``` bash
 ubuntu@ip-172-31-35-36:~$ sudo lsof -i :80
 COMMAND PID USER   FD   TYPE DEVICE SIZE/OFF NODE NAME
@@ -210,17 +211,26 @@ ubuntu@ip-172-31-35-36:~$ sudo systemctl stop srv
 ubuntu@ip-172-31-35-36:~$ sudo systemctl disable srv
 Removed "/etc/systemd/system/multi-user.target.wants/srv.service".`
 ```
-**-> reboot 後還是失敗，nginx 沒有在開機時自動啟動**
+**-> reboot 後還是失敗，需要restart nginx 才能成功，顯示 nginx 沒有在開機時自動啟動**
 
-### 9. 啟用 nginx，讓他開機後自動啟動
+### 10. 啟用 nginx，讓他開機後自動啟動
 ``` bash
 ubuntu@ip-172-31-35-36:~$ sudo systemctl enable nginx
 Synchronizing state of nginx.service with SysV service script with /usr/lib/systemd/systemd-sysv-install.
 Executing: /usr/lib/systemd/systemd-sysv-install enable nginx
 ubuntu@ip-172-31-35-36:~$ sudo systemctl start nginx
 ```
-### 10. 再reboot一次，這次沒出現任何問題，直接成功
+### 11. 再reboot一次，這次沒出現任何問題，直接成功
 <img width="291" alt="截圖 2024-11-10 上午11 48 02" src="https://github.com/user-attachments/assets/0cccb435-facc-4eb5-b033-7448888c3402">
 
 ### 心得
+這次的 Troubleshooting Lab 很有趣。
+雖然之前有處理過佔用 port 的問題，但是是第一次處理防火牆和權限問題，原本也都不知道 reboot 後 iptables 的規則不會儲存等等。
 
+我在課堂上幾乎都是需要別人的提醒才能知道是哪裡有問題，還帶著一點挫敗感矇矇懂懂完成。
+但回家後重新再做了一次，一邊紀錄、撰寫驗屍報告，最後成功靠自己修好 web server，還是很有成就感🥺。
+
+再重新做過一次之後可以理解所有 error message 其實都有好好傳遞可能會有的問題。
+之前處理各種 error message 時因為事態緊急和時間迫切，所以都是直接整坨丟給 GPT，要他幫我想辦法，但其實很多時候也不清楚為什麼要這樣做操作，有時候 GPT 還會鬼打牆一直叫我檢查已經沒問題的地方，更多時候他也沒辦法成功幫我解決。
+
+總之經由這次的 lab ，我更知道要怎麼去看 error message，嘗試各種方法解決。最大的收穫可能是「不要急」，一直有問題噴出來就一個一個慢慢解決就好ㄌ！
